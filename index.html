@@ -3,22 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Update GitHub Pages</title>
 </head>
 <body>
-    <input type="text">
-    <button id="name">OK </button>
+    <input type="text" id="inputField" placeholder="Enter your information">
+    <button id="submitButton">OK</button>
 
     <script>
-                document.getElementById("name").addEventListener("click", function(){
-                            fetch("http://localhost:3000/course")
-                                                .then((response) => {
-                                                  return    response.json();
-                                                })
-                                                .then((value) =>{
-                                                console.log(value)
-                                                })
-                })
+        document.getElementById("submitButton").addEventListener("click", function() {
+            const inputValue = document.getElementById("inputField").value;
+
+            fetch("http://localhost:3000/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ data: inputValue }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+                // Optionally, you can update the page or show a message to the user
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+        });
     </script>
 </body>
 </html>
